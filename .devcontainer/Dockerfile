@@ -11,39 +11,30 @@ RUN apt-get update && \
         default-libmysqlclient-dev libgdiplus jq python3-pip sqlite3 \
         libsqlite3-dev tk-dev uuid-dev clang lldb llvm gdb vim-doc xtail \
         libsecret-1-dev && \
-        apt-get install -y imagemagick && \
-        apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
+        apt-get install -y imagemagick
         
 # CR mshinwell/avsm: use a hash for --repos, but will need to restore the
 # URL afterwards for any user opam update commands.
 
-RUN eval $(opam env --switch 5.2.0+ox) && \
-        opam install -j 1  --yes ocamlformat && \
+RUN opam install -j 1  --yes ocamlformat && \
+        opam clean
+
+RUN opam install -j 1 --yes merlin && \
         opam clean
 
 RUN df -h
 
-RUN eval $(opam env --switch 5.2.0+ox) && \        
-        opam install -j 1 --yes merlin && \
+RUN opam install -j 1  --yes async && \
         opam clean
 
 RUN df -h
 
-RUN eval $(opam env --switch 5.2.0+ox) && \          
-        opam install -j 1  --yes async && \
+RUN opam install -j 1  --yes ocaml-lsp-server && \
         opam clean
 
 RUN df -h
 
-RUN eval $(opam env --switch 5.2.0+ox) && \          
-        opam install -j 1  --yes ocaml-lsp-server && \
-        opam clean
-
-RUN df -h
-
-RUN eval $(opam env --switch 5.2.0+ox) && \
-        opam install --yes utop && \
+RUN opam install --yes utop && \
         opam install --yes parallel && \
         opam install --yes core_unix
 
