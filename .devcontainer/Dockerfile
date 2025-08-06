@@ -1,11 +1,5 @@
 FROM ocurrent/opam-staging:oxcaml
 
-ARG USERNAME=codespace
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-USER ${USERNAME}
-
 RUN apt-get update && \
         apt-get remove -y swig3.0 unixodbc-dev libpq-dev \
         default-libmysqlclient-dev libgdiplus jq python3-pip sqlite3 \
@@ -37,5 +31,3 @@ RUN df -h
 RUN opam install --yes utop && \
         opam install --yes parallel && \
         opam install --yes core_unix
-
-USER root
