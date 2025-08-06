@@ -6,6 +6,15 @@ ARG USER_GID=$USER_UID
 
 USER ${USERNAME}
 
+RUN apt-get update && \
+        apt-get remove -y swig3.0 unixodbc-dev libpq-dev \
+        default-libmysqlclient-dev libgdiplus jq python3-pip sqlite3 \
+        libsqlite3-dev tk-dev uuid-dev clang lldb llvm gdb vim-doc xtail \
+        libsecret-1-dev && \
+        apt-get install -y imagemagick && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+        
 # CR mshinwell/avsm: use a hash for --repos, but will need to restore the
 # URL afterwards for any user opam update commands.
 
